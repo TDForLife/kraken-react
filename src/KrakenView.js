@@ -61,16 +61,16 @@ const styles = {
   }
 };
 
-const windowObj = window.webf;
+const krakenObj = window.webf;
 
 function KrakenView() {
   const [krakenReply, setNativeReply] = useState('');
   const [krakenRequest, setNativeRequest] = useState('');
 
   useEffect(() => {
-    console.log(windowObj.methodChannel);
-    windowObj.methodChannel.clearMethodCallHandler();
-    windowObj.methodChannel.addMethodCallHandler((method, args) => {
+    console.log(krakenObj.methodChannel);
+    krakenObj.methodChannel.clearMethodCallHandler();
+    krakenObj.methodChannel.addMethodCallHandler((method, args) => {
       var request = method + ' method invoked' + '\n' + 'Its params is : ' + args;
       console.log('Received request from Kraken : ' + request);
       setNativeRequest(request);
@@ -88,7 +88,7 @@ function KrakenView() {
       <div style={styles.BoardTitle}> { ">> Request from Kraken <<" }</div>
       <div style={styles.KrakenDataBoard}>{krakenRequest}</div>
       <div style={styles.CallKrakenButton} onClick={ () => {
-        windowObj.methodChannel.invokeMethod('onJSCall', new Date().getTime().toString(), ['Param Two'], {
+        krakenObj.methodChannel.invokeMethod('onJSCall', new Date().getTime().toString(), ['Param Two'], {
           value: 'Param Three',
         })
         .then(result => {
